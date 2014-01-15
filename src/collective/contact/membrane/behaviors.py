@@ -1,3 +1,4 @@
+
 from five import grok
 
 from dexterity.membrane.behavior.membraneuser import IMembraneUser, MembraneUser, IMembraneUserObject, IMembraneUserWorkflow
@@ -14,6 +15,9 @@ class PersonMembraneUser(MembraneUser):
     allowed_states = ('active')
     _default = {'use_email_as_username': True,
                 'use_uuid_as_userid': True}
+
+    def get_full_name(self):
+        return self.context.get_full_name()
 
 
 class PersonMembraneUserAdapter(grok.Adapter, PersonMembraneUser):
