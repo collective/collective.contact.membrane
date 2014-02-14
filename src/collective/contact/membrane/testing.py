@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Base module for unittesting."""
 
+from plone import api
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
@@ -22,12 +23,15 @@ class CollectiveContactMembraneLayer(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
+    products = ('collective.contact.membrane', 'Products.membrane')
+
     def setUpZope(self, app, configurationContext):
         """Set up Zope."""
         # Load ZCML
         self.loadZCML(package=collective.contact.membrane,
                       name='testing.zcml')
-        z2.installProduct(app, 'collective.contact.membrane')
+        for p in self.products:
+            z2.installProduct(app, p)
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
@@ -40,13 +44,21 @@ class CollectiveContactMembraneLayer(PloneSandboxLayer):
         folder_id = portal.invokeFactory('Folder', 'folder')
         portal[folder_id].reindexObject()
 
+        # reindex all membrane objects
+        membrane = api.portal.get_tool('membrane_tool')
+        catalog = api.portal.get_tool('portal_catalog')
+        brains = catalog.searchResults(portal_type=tuple(membrane.membrane_types))
+        for brain in brains:
+            membrane.reindexObject(brain.getObject())
+
         # Commit so that the test browser sees these objects
         import transaction
         transaction.commit()
 
     def tearDownZope(self, app):
         """Tear down Zope."""
-        z2.uninstallProduct(app, 'collective.contact.membrane')
+        for p in reversed(self.products):
+            z2.uninstallProduct(app, p)
 
 
 FIXTURE = CollectiveContactMembraneLayer(

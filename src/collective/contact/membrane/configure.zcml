@@ -17,6 +17,7 @@
     <include package="Products.membrane" />
     <include package="dexterity.membrane" />
 
+    <include package=".behaviors" />
     <include package=".content" />
 
     <grok:grok package="." />
@@ -35,14 +36,5 @@
         description="Post install import step from collective.contact.membrane"
         handler=".setuphandlers.post_install">
     </genericsetup:importStep>
-
-    <plone:behavior
-        title="Person Membrane User"
-        description="Use Person as a membrane user"
-        provides=".behaviors.IPersonMembraneUser"
-        marker=".behaviors.IPersonMembraneUser"
-        factory=".behaviors.PersonMembraneUser"
-        for="dexterity.membrane.content.member.IEmail"
-        />
 
 </configure>
