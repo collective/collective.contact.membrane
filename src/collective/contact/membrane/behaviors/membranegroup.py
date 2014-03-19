@@ -2,7 +2,7 @@
 from five import grok
 
 from zc.relation.interfaces import ICatalog
-from zope.component import getUtility
+from zope.component import getUtility, queryAdapter
 from zope.intid.interfaces import IIntIds
 
 from Products.membrane.interfaces import IGroup
@@ -61,9 +61,13 @@ class MembraneGroupAdapter(grok.Adapter, MembraneGroup):
 
 
 class GroupMembraneUserGroups(grok.Adapter):
+
     grok.context(IMembraneGroup)
     grok.implements(IMembraneUserGroups)
 
     def getGroupsForPrincipal(self, principal, request=None):
-        group = IGroup(self.context.getParentNode())
-        return (group.getGroupId(), )
+        group = queryAdapter(self.context.getParentNode(), IGroup)
+        if group is not None:
+            return (group.getGroupId(), )
+
+        return ()

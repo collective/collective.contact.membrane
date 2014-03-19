@@ -22,10 +22,16 @@ class TestMembraneGroup(IntegrationTestCase, BaseTest):
         portal = api.portal.get()
         self.armeedeterre = portal.mydirectory.armeedeterre
         self.general_adt = self.armeedeterre.general_adt
+        self.brigadelh = self.armeedeterre.corpsa.divisionalpha.regimenth.brigadelh
+        self.sergent_lh = self.armeedeterre.corpsa.divisionalpha.regimenth.brigadelh.sergent_lh
         self.dummyperson = api.content.create(type='person', id='dummyperson',
                                               container=portal.mydirectory)
         membrane_tool = api.portal.get_tool('membrane_tool')
         membrane_tool.reindexObject(self.dummyperson)
+        membrane_tool.reindexObject(self.armeedeterre)
+        membrane_tool.reindexObject(self.general_adt)
+        membrane_tool.reindexObject(self.brigadelh)
+        membrane_tool.reindexObject(self.sergent_lh)
 
     def test_get_organization_group(self):
         armeedeterre_group = api.group.get(groupname='armeedeterre')
@@ -73,5 +79,25 @@ class TestMembraneGroup(IntegrationTestCase, BaseTest):
                            id='dummyperson_adt', position=relation)
         self.assertEqual(adapter.getGroupsForPrincipal(dummyperson), ('armeedeterre', ))
 
+        relation = RelationValue(intids.getId(self.sergent_lh))
+        api.content.create(container=dummyperson, type='held_position',
+                           id='dummyperson_sergent_lh', position=relation)
+        groups = adapter.getGroupsForPrincipal(dummyperson)
+        self.assertIn('armeedeterre', groups)
+        self.assertIn('armeedeterre_corpsa_divisionalpha_regimenth_brigadelh_sergent_lh', groups)
+
         # test getGroups
-        self.assertIn('armeedeterre', api.user.get(userid=dummyperson.UID()).getGroups())
+        groups = api.user.get(userid=dummyperson.UID()).getGroups()
+        self.assertIn('armeedeterre', groups)
+        self.assertIn('armeedeterre_corpsa_divisionalpha_regimenth_brigadelh_sergent_lh', groups)
+        self.assertIn('armeedeterre_corpsa_divisionalpha_regimenth_brigadelh_sergent_lh', groups)
+        self.assertIn('armeedeterre_corpsa', groups)
+        self.assertIn('armeedeterre', groups)
+
+        sergent_lh_group = api.group.get(groupname='armeedeterre_corpsa_divisionalpha_regimenth_brigadelh_sergent_lh')
+        groups = sergent_lh_group.getGroups()
+        self.assertIn('armeedeterre_corpsa_divisionalpha_regimenth_brigadelh',
+                      groups)
+        self.assertIn('armeedeterre_corpsa_divisionalpha_regimenth', groups)
+        self.assertIn('armeedeterre_corpsa', groups)
+        self.assertIn('armeedeterre', groups)
