@@ -29,6 +29,11 @@ class PersonMembraneUser(MembraneUser):
     def get_full_name(self):
         return self.context.get_full_name()
 
+    def getUserName(self):
+        if self._use_email_as_username():
+            return self.context.email
+        return self.context.getId()
+
 
 class PersonMembraneUserAdapter(grok.Adapter, PersonMembraneUser):
     grok.context(IPersonMembraneUser)
