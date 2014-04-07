@@ -21,3 +21,9 @@ class TestInstall(IntegrationTestCase):
         """Test if collective.contact.membrane is cleanly uninstalled."""
         self.installer.uninstallProducts(['collective.contact.membrane'])
         self.assertFalse(self.installer.isProductInstalled('collective.contact.membrane'))
+
+    def test_membrane_person_user(self):
+        degaulle = self.portal.mydirectory.degaulle
+        user = api.user.get(degaulle.UID())
+        self.assertEqual(user.getProperty('fullname'), u"Charles De Gaulle")
+        self.assertEqual(user.getProperty('email'), "charles.de.gaulle@armees.fr")
