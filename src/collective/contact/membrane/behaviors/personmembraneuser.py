@@ -16,7 +16,7 @@ class IPersonMembraneUser(IMembraneUser):
 class PersonMembraneUser(MembraneUser):
     """Person Membrane User
     """
-    allowed_states = ('active')
+    allowed_states = ('active',)
     _default = {'use_email_as_username': True,
                 'use_uuid_as_userid': True}
 
