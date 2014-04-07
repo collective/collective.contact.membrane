@@ -41,7 +41,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'collective.contact.core',
+        'collective.contact.core>=1.2',
         'dexterity.membrane',
         'five.grok',
         'plone.api',
