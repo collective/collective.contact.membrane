@@ -12,6 +12,8 @@ from Products.PlonePAS.sheet import MutablePropertySheet
 from collective.contact.core.interfaces import IContactable,\
     IPersonHeldPositions
 from collective.contact.core.behaviors import IContactDetails
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.event import notify
 
 
 class IPersonMembraneUser(IMembraneUser):
@@ -91,10 +93,17 @@ class PersonMembraneUserProperties(MyUserProperties, PersonMembraneUser):
             else:
                 return
 
+        changed = False
         properties = dict(propertysheet.propertyItems())
         for prop_name, field_name in self.property_map.items():
             value = properties.get(prop_name, '').strip()
-            setattr(storage, field_name, value)
+            if value != getattr(storage, field_name, ''):
+                setattr(storage, field_name, value)
+                changed = True
+
+        if changed:
+            storage.reindexObject()
+            notify(ObjectModifiedEvent(storage))
 
 
 class PersonMembraneUserGroups(grok.Adapter):
