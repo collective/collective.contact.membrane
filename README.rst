@@ -18,6 +18,6 @@ contact entry is updated.
 Organizations are Plone Groups
 ==============================
 
-Organizations and functions becomes Plone Groups.
-If a person has an held position into the organization or the function,
-she is a member of this group.
+Organizations and positions becomes Plone Groups.
+If a person has an held position into the organization or the position,
+he/she is a member of this group.
