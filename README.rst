@@ -7,7 +7,7 @@ Integration of dexterity membrane with contacts from collective.contact.core.
 Contacts are Plone users
 ========================
 
-When you install this package, contacts become Plone users.
+When you install this package, contacts (Person contents) become Plone users.
 Once they have a password, they can login,
 using the contact id or the contact email (set the parameter in the control panel)
 
