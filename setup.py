@@ -19,7 +19,7 @@ long_description = (
 
 setup(
     name='collective.contact.membrane',
-    version='1.0',
+    version='1.1.dev0',
     description="Membrane integration for collective.contact content types",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
