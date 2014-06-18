@@ -21,3 +21,11 @@ Organizations are Plone Groups
 Organizations and positions becomes Plone Groups.
 If a person has an held position into the organization or the position,
 he/she is a member of this group.
+
+Tests
+=====
+
+This add-on is tested using Travis CI. The current status of the add-on is :
+
+.. image:: https://secure.travis-ci.org/collective/collective.contact.membrane.png
+    :target: http://travis-ci.org/collective/collective.contact.membrane
