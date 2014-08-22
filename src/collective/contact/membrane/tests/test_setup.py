@@ -27,4 +27,4 @@ class TestInstall(IntegrationTestCase):
         user = api.user.get(degaulle.UID())
         self.assertEqual(user.getProperty('fullname'), u"Charles De Gaulle")
         self.assertEqual(user.getProperty('email'), "charles.de.gaulle@armees.fr")
-        self.assertEqual(user.getProperty('home_page'), 'www.charles-de-gaulle.org')
+        self.assertEqual(user.getProperty('home_page'), 'http://www.charles-de-gaulle.org')
