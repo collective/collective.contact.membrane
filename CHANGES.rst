@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-1.1 (unreleased)
-----------------
+1.0.1 (2014-09-15)
+------------------
 
 - Change i18n domain in person types xml (collective.contact.core)
 
