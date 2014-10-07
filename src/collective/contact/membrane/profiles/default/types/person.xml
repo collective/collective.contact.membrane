@@ -3,6 +3,6 @@
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="behaviors" purge="False">
   <element value="collective.contact.membrane.behaviors.personmembraneuser.IPersonMembraneUser" />
-  <element value="dexterity.membrane.behavior.membraneuser.IProvidePasswords" />
+  <element value="dexterity.membrane.behavior.membranepassword.IProvidePasswords" />
 </property>
 </object>

@@ -42,7 +42,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'collective.contact.core>1.1',
-        'dexterity.membrane',
+        'dexterity.membrane>0.4',
+        'ecreall.helpers.upgrade',
         'five.grok',
         'plone.api',
         'setuptools',

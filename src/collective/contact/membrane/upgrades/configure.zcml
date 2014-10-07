@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.contact.membrane">
+
+  <include package="ecreall.helpers.upgrade" />
+
+  <genericsetup:upgradeSteps
+      source="1"
+      destination="2"
+      profile="collective.contact.membrane:default">
+
+    <genericsetup:upgradeStep
+        title="General upgrade step"
+        description="General upgrade step"
+        handler=".upgrades.v2" />
+
+   </genericsetup:upgradeSteps>
+
+</configure>

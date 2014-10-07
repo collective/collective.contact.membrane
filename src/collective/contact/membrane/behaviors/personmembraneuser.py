@@ -1,10 +1,11 @@
 from five import grok
 
 from dexterity.membrane.behavior.membraneuser import (IMembraneUser,
-                                                      MembraneUser,
+                                                      DxUserObject,
+                                                      MembraneUserWorkflow,
                                                       IMembraneUserObject,
                                                       IMembraneUserWorkflow,
-                                                      MyUserProperties)
+                                                      MembraneUserProperties)
 from Products.membrane.interfaces import IGroup
 from Products.membrane.interfaces.user import IMembraneUserGroups,\
     IMembraneUserProperties
@@ -21,10 +22,9 @@ class IPersonMembraneUser(IMembraneUser):
     """
 
 
-class PersonMembraneUser(MembraneUser):
+class PersonMembraneUser(DxUserObject):
     """Person Membrane User
     """
-    allowed_states = ('active',)
     _default = {'use_email_as_username': True,
                 'use_uuid_as_userid': True}
 
@@ -42,12 +42,16 @@ class PersonMembraneUserAdapter(grok.Adapter, PersonMembraneUser):
     grok.implements(IMembraneUserObject)
 
 
-class PersonMembraneUserWorkflow(grok.Adapter, PersonMembraneUser):
+class PersonMembraneUserWorkflow(grok.Adapter, MembraneUserWorkflow,
+                                 PersonMembraneUser):
     grok.context(IPersonMembraneUser)
     grok.implements(IMembraneUserWorkflow)
 
+    allowed_states = ('active',)
 
-class PersonMembraneUserProperties(MyUserProperties, PersonMembraneUser):
+
+class PersonMembraneUserProperties(grok.Adapter, MembraneUserProperties,
+                                   PersonMembraneUser):
     grok.context(IPersonMembraneUser)
     grok.implements(IMembraneUserProperties)
 
@@ -56,10 +60,6 @@ class PersonMembraneUserProperties(MyUserProperties, PersonMembraneUser):
         home_page='website',
         location='city',
         )
-
-    @property
-    def fullname(self):
-        return self.context.get_full_name()
 
     def getPropertiesForUser(self, user, request=None):
         """Get properties for this user.
