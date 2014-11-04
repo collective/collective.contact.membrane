@@ -116,8 +116,10 @@ class PersonMembraneUserGroups(grok.Adapter):
         for held_position in person.get_held_positions():
             position = held_position.position
             if position:
-                group = IGroup(position.to_object)
-                group_id = group.getGroupId()
-                groups[group_id] = 1
+                obj = position.to_object
+                if obj:
+                    group = IGroup(obj)
+                    group_id = group.getGroupId()
+                    groups[group_id] = 1
 
         return tuple(groups.keys())
