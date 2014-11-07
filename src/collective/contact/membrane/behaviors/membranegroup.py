@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+"""Turn organizations into Membrane groups."""
 from five import grok
 
 from zc.relation.interfaces import ICatalog
@@ -22,8 +23,8 @@ def get_active_states():
 
 
 class IMembraneGroup(IOriginMembraneGroup):
-    """Marker interface for Membrane Group
-    """
+
+    """Marker interface for Membrane Group."""
 
 
 class MembraneGroup(OriginMembraneGroup):
@@ -37,26 +38,25 @@ class MembraneGroup(OriginMembraneGroup):
     """
 
     def Title(self):
+        """Return group title."""
         return self.context.Title()
 
     def getGroupId(self):
-        """Concatenates all ids in the chain of organizations/positions
-        """
+        """Concatenate all ids in the chain of organizations/positions."""
         chain = self.context.get_organizations_chain()
         return '_'.join([x.getId() for x in chain])
 
     def getGroupName(self):
+        """Return group name."""
         return self.context.Title()
 
     def getGroupMembers(self):
-        """Get persons object that are members of this group
-        """
+        """Get persons object that are members of this group."""
         held_positions = self.getGroupHeldPositions()
         return tuple([hp.getParentNode().UID() for hp in held_positions])
 
     def getGroupHeldPositions(self):
-        """Get held_positions objects in this group
-        """
+        """Get held_positions objects in this group."""
         catalog = getUtility(ICatalog)
         intids = getUtility(IIntIds)
         intid = intids.queryId(self.context)

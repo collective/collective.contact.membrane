@@ -72,9 +72,9 @@ class PersonMembraneUserProperties(grok.Adapter, MembraneUserProperties,
         contactable = IContactable(self.context)
         details = contactable.get_contact_details(keys=self.property_map.values() + ['address'])
         for prop_name, field_name in self.property_map.items():
-            properties[prop_name] = details.get(field_name,
-                                    details['address'].get(field_name, None)
-                                    ) or u""
+            properties[prop_name] = details.get(
+                field_name,
+                details['address'].get(field_name, None)) or u""
 
         return MutablePropertySheet(self.context.getId(),
                                     **properties)

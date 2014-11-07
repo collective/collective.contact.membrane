@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Upgrades for collective.contact.membrane
-"""
+"""Upgrades for collective.contact.membrane."""
+#pylint: disable=E1121
+
 from ecreall.helpers.upgrade.interfaces import IUpgradeTool
 
 
