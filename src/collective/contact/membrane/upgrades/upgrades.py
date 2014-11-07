@@ -5,5 +5,12 @@ from ecreall.helpers.upgrade.interfaces import IUpgradeTool
 
 
 def v2(context):
+    """Upgrade to v2."""
     tool = IUpgradeTool(context)
-    tool.runImportStep('webpro.ged', 'typeinfo')  #pylint: disable=E1121
+    tool.runImportStep('webpro.ged', 'typeinfo')
+
+
+def v3(context):
+    """Upgrade to v3."""
+    tool = IUpgradeTool(context)
+    tool.runImportStep('collective.contact.membrane', 'plone.app.registry')

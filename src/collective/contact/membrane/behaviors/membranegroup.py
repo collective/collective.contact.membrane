@@ -9,8 +9,16 @@ from Products.membrane.interfaces import IGroup
 from Products.membrane.interfaces.user import IMembraneUserGroups
 from dexterity.membrane.behavior.membranegroup import IMembraneGroup as IOriginMembraneGroup
 from dexterity.membrane.behavior.membranegroup import MembraneGroup as OriginMembraneGroup
+from plone import api
 
 from collective.contact.core.content.held_position import IHeldPosition
+
+
+def get_active_states():
+    """Return active states for held position."""
+    record_name = "collective.contact.membrane.interfaces."\
+                  "IContactMembraneParameters.active_held_position_states"
+    return api.portal.get_registry_record(record_name)
 
 
 class IMembraneGroup(IOriginMembraneGroup):
@@ -19,6 +27,14 @@ class IMembraneGroup(IOriginMembraneGroup):
 
 
 class MembraneGroup(OriginMembraneGroup):
+
+    """Turn organizations into Membrane groups.
+
+    If active states is empty, every person who have an held position in the
+    organization is a group member.
+    If active states is not empty, only persons that have an at least an
+    held position in one of these states are group member.
+    """
 
     def Title(self):
         return self.context.Title()
@@ -45,12 +61,15 @@ class MembraneGroup(OriginMembraneGroup):
         intids = getUtility(IIntIds)
         intid = intids.queryId(self.context)
         held_positions = []
+        active_states = get_active_states()
         query = {'to_id': intid,
                  'from_interfaces_flattened': IHeldPosition,
                  'from_attribute': 'position'}
         for relation in catalog.findRelations(query):
             held_position = relation.from_object
-            held_positions.append(held_position)
+            if (not active_states
+                    or api.content.get_state(held_position) in active_states):
+                held_positions.append(held_position)
 
         return tuple(held_positions)
 

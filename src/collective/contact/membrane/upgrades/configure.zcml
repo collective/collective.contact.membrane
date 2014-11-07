@@ -15,6 +15,14 @@
         description="General upgrade step"
         handler=".upgrades.v2" />
 
-   </genericsetup:upgradeSteps>
+  </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeStep
+      title="Upgrade from 2 to 3"
+      description="Add active_held_position_states record in registry"
+      source="2"
+      destination="3"
+      handler=".upgrades.v3"
+      profile="collective.contact.membrane:default" />
 
 </configure>

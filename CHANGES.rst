@@ -5,6 +5,10 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
+- Add parameter to choose which held position states are used to add
+  persons to organization group. All positions are used if parameter is not set.
+  [cedricmessiant]
+
 - Fix getGroupsForPrincipal so it does not crash if no position
   [ebrehault]
 
