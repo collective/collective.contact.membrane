@@ -8,7 +8,6 @@ from ecreall.helpers.upgrade.interfaces import IUpgradeTool
 def v2(context):
     """Upgrade to v2."""
     tool = IUpgradeTool(context)
-    tool.runImportStep('webpro.ged', 'typeinfo')
 
 
 def v3(context):
