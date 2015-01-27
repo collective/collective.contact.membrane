@@ -1,5 +1,6 @@
 from five import grok
 
+from plone.dexterity.behavior import DexterityBehaviorAssignable
 from dexterity.membrane.behavior.membraneuser import (IMembraneUser,
                                                       DxUserObject,
                                                       MembraneUserWorkflow,
@@ -16,6 +17,7 @@ from collective.contact.core.behaviors import IContactDetails
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.event import notify
 
+from collective.contact.membrane.behaviors.membranegroup import IMembraneGroup
 
 class IPersonMembraneUser(IMembraneUser):
     """Marker/Form interface for Person Membrane User
@@ -118,8 +120,10 @@ class PersonMembraneUserGroups(grok.Adapter):
             if position:
                 obj = position.to_object
                 if obj:
-                    group = IGroup(obj)
-                    group_id = group.getGroupId()
-                    groups[group_id] = 1
+                    assignable = DexterityBehaviorAssignable(obj)
+                    if assignable.supports(IMembraneGroup):
+                        group = IGroup(obj)
+                        group_id = group.getGroupId()
+                        groups[group_id] = 1
 
         return tuple(groups.keys())

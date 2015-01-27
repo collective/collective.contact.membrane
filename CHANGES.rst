@@ -12,6 +12,9 @@ Changelog
 - Fix getGroupsForPrincipal so it does not crash if no position
   [ebrehault]
 
+- Do not crash Person membrane behavior if Group membrane behavior is not assigned to
+  organizations [ebrehault]
+
 
 1.0.1 (2014-09-15)
 ------------------
