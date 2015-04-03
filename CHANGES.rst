@@ -5,7 +5,8 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Works only with dexterity.membrane <= 1.0
+  [vincentfretin]
 
 
 1.0.2 (2015-04-03)
