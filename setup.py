@@ -42,8 +42,9 @@ setup(
     zip_safe=False,
     install_requires=[
         'collective.contact.core>1.1',
-        'dexterity.membrane>0.4',
+        'dexterity.membrane<=1.0',
         'ecreall.helpers.upgrade',
+        'plone.directives.form', # non declared dependency of dexterity.membrane 1.0, can be removed after upgrading dexterity.membrane if dexterity.membrane doesn't depend on it anymore.
         'five.grok',
         'plone.api',
         'setuptools',
