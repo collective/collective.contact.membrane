@@ -19,7 +19,12 @@ def get_active_states():
     """Return active states for held position."""
     record_name = "collective.contact.membrane.interfaces."\
                   "IContactMembraneParameters.active_held_position_states"
-    return api.portal.get_registry_record(record_name)
+    try:
+        active_states = api.portal.get_registry_record(record_name)
+    except api.exc.InvalidParameterError:
+        active_states = []
+
+    return active_states
 
 
 class IMembraneGroup(IOriginMembraneGroup):
