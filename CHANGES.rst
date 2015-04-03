@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.2 (unreleased)
+1.0.2 (2015-04-03)
 ------------------
 
 - Add parameter to choose which held position states are used to add
