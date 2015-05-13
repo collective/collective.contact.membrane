@@ -2,6 +2,8 @@
 collective.contact.membrane
 ===========================
 
+This add-on is part of the ``collective.contact.*`` suite. For an overview and a demo of these suite, see `collective.contact.demo <https://github.com/collective/collective.contact.demo>`__.
+
 Integration of dexterity membrane with contacts from collective.contact.core.
 
 For an overview and a demo of `collective.contact.*` suite, see `collective.contact.demo <https://github.com/collective/collective.contact.demo>`__ package.
